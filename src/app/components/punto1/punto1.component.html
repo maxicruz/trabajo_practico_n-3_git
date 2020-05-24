@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <h1> Punto 1 - Mensaje </h1>
+    
+  <form role="form" class="form-horizontal">
+    <h2>Envía tu mensaje</h2>
+      <!-- /Para -->
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Para</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" placeholder="Ingrese el número" required [(ngModel)]="num" name="num" >
+            </div>
+        </div>
+      <!-- /De -->
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">De</label>
+            <div class="col-sm-8">
+              <input  type="text" class="form-control" maxlength="30" placeholder="Ingrese su nombre" required [(ngModel)]="text" name="text">
+            </div>
+        </div>
+      <!-- /Mensaje -->
+        <div class="form-group row">
+          <div class="col">
+            <label class="col-2 text-left">Tu Mensaje</label>
+            <label class="col-10 text-right">({{tamMaxCaracteres - tamActCaracteres}} Caracteres Restantes -
+                    {{tamActCaracteres}} Caracteres Escritos)</label>
+            <textarea class="form-control" rows="3" placeholder="Ingrese tu mensaje......." required maxlength="120" [(ngModel)]="msj" (keyup)="modificarCadena()" name="msj" id="msj"></textarea> 
+          </div>
+        </div>
+        <div class="form-group text-center">
+          <button type="button" class="btn btn-outline-dark col-lg-2 mr-sm-2 my-2" (click)="enviar()"> ENVIAR </button>
+          <button type="reset" class="btn btn-outline-dark col-lg-2" (click)="limpiar()"> LIMPIAR </button> 
+        </div>
+      <!-- /Estado de mensaje -->
+      <div class="form-group text-center" *ngIf="mostrar">
+        <label class="col control-label"> Estado del Mensaje : </label>
+        <span class="btn btn-dark col-lg-4">{{estadomensaje}}</span> 
+      </div>
+  </form>
+  <br>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="smsmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmar envio de mensaje</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>Para: {{num}}</h5>
+        <h5>De: {{text}}</h5>
+        <h5>Mensaje</h5>
+        <p> {{msj}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>

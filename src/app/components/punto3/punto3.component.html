@@ -1,0 +1,107 @@
+<div class="container-fluid">
+  <h1> Punto 3 - Venta de Pasajes </h1>
+
+  <form #formregistro="ngForm" class="form-horizontal">
+    <h2>Precio de Boleto - Descuento</h2>
+    <!-- /DNI del Pasajero -->
+      <div class="form-group row">
+        <label for="dniPasajero" class="col-sm-3 col-form-label"> DNI del Pasajero </label>
+        <div class="col-sm-8">
+          <input type="number" class="form-control" id="dniPasajero" name="dniPasajero" placeholder="Ingrese el DNI del pasajero" required min="10000000" max="999999999" [(ngModel)]="venta.dniPasajero" #dniPasajero="ngModel"/>
+        </div>  
+      </div>
+    <!-- /Precio del Pasaje -->
+      <div class="form-group row">
+        <label for="precioPasaje" class="col-sm-3 col-form-label"> Precio del Pasaje </label>
+        <div class="col-sm-8">
+          <input type="number" class="form-control" id="precioPasaje" name="precioPasaje" (change)="calcularDescuento()" required min="1" [(ngModel)]="venta.precioPasaje" placeholder="Ingrese el precio del pasaje"/>
+        </div>  
+      </div>
+    <!-- /Categoría -->
+      <div class="form-group row">
+        <label for="categoria" class="col-sm-3 col-form-label"> Categor&iacute;a </label>
+        <div class="col-sm-8">
+          <select class="custom-select" id="categoria" name="categoria" (change)="calcularDescuento()" required [(ngModel)]="venta.categoriaPasajero">  
+            <option value="s" selected hidden>Seleccione un opcion...</option>
+            <option value="m">Menor</option>
+            <option value="a">Adulto</option>
+            <option value="j">Jubilado</option>
+          </select>
+        </div> 
+      </div>
+    <!-- /Cuadro -->
+      <div id="cuadro" class="text-center" *ngIf="mostrar">
+        <div><h2> Descuento: {{precio_descuento}} </h2></div>
+        <div><h2> Precio total: {{precio_actual | currency }} </h2></div>
+      </div>
+    <!-- /Registrar y Limpiar -->
+      <div class="form-group text-center">
+        <button class="btn btn-outline-success col-lg-2 mr-sm-2 my-2" type="submit" value="registrar" (click)="guardarVenta()" [disabled]="!formregistro.form.valid">
+          REGISTRAR
+        </button>
+        <button class="btn btn-outline-danger col-lg-2 mr-sm-2 my-2" type="reset" value="limpiar" (click)="limpiarVenta()">
+          LIMPIAR 
+        </button>
+      </div>
+    </form> 
+<!-- /Listado de Pasajeros -->
+  <div><h2 class="alert alert-success col-12 my-0"> Listado de Pasajeros </h2>
+    <table class="table table-responsive-lg table-dark text-center">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">DNI</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Categor&iacute;a</th>
+          <th scope="col">Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ve of vector_ventas">
+          <td></td> 
+          <td>{{ve.dniPasajero | number:'1.0-2'}}</td> 
+          <td>{{ve.precioPasaje | currency }}</td> 
+          <td>{{ve.categoriaPasajero | uppercase}}</td>
+          <td>{{ve.fechaCompra | date:'dd/MM/yyyy'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<!-- /Listado de pasajes vendidos -->
+  <div><h2 class="alert alert-primary col-12 my-0"> Listado de pasajes vendidos </h2>
+    <table class="table table-responsive-lg text-center" [mfData]="pasajes" #mf="mfDataTable" [mfRowsOnPage]="5"> 
+      <thead> 
+          <tr>
+          <th style="width: 20%"> 
+              <mfDefaultSorter by="dniPasajero">DNI</mfDefaultSorter> 
+          </th> 
+          <th style="width: 20%"> 
+              <mfDefaultSorter by="precioPasaje">Precio</mfDefaultSorter> 
+          </th>
+          <th style="width: 20%"> 
+              <mfDefaultSorter by="categoriaPasajero">Categoria</mfDefaultSorter> 
+          </th>
+          <th style="width: 20%"> 
+            <mfDefaultSorter by="categoriaPasajero">Fecha</mfDefaultSorter> 
+        </th> 
+      </tr>
+      </thead> 
+      <tbody> 
+          <tr *ngFor="let item of mf.data"> 
+              <td>{{item.dniPasajero | number:'1.0-2'}}</td> 
+              <td>{{item.precioPasaje | currency}}</td> 
+              <td>{{item.categoriaPasajero | uppercase }}</td> 
+              <td>{{item.fechaCompra | date:'dd/MM/yyyy'}}</td> </tr> 
+      </tbody> 
+      <tfoot> 
+          <tr> 
+              <td colspan="4"> 
+                  <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]">
+  
+                  </mfBootstrapPaginator> 
+              </td> 
+          </tr> 
+      </tfoot> 
+    </table>
+  </div> 
+</div>
