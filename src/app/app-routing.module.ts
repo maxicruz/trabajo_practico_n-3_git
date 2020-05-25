@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 import { NgxDataTableModule} from "angular-9-datatable";
 import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
 
 import { HomeComponent } from "./components/home/home.component";
 import { AboutComponent } from "./components/about/about.component";
@@ -18,7 +19,7 @@ const routes: Routes = [
   { path: 'punto2', component: Punto2Component },
   { path: 'punto3', component: Punto3Component },
   { path: 'punto4', component: Punto4Component },
-  { path: '**', pathMatch:'full',redirectTo:'home'}
+  { path: '**', pathMatch:'full',redirectTo:'home'},
 ];
 
 @NgModule({

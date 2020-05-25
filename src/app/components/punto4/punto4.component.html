@@ -3,52 +3,54 @@
 
     <form #formregistro="ngForm" class="form-horizontal">
         <h2> Jugar al crucigrama </h2>
-
+        <!-- INICIAR JUEGO Y REINICIAR -->
         <div class="form-group text-center">
-            <button class="btn btn-dark col-lg-3 mr-sm-2 my-2" type="submit" value="iniciar juego" 
-            (click)="iniciarJuego()" [disabled]="!formregistro.form.valid"> 
-                Iniciar JUEGO
-            </button>
-         <!--   <button class="btn btn-dark col-lg-3 mr-sm-2 my-2" type="submit" value="categoria">
-                Categor&iacute;a                              
-                <select class="control" id="categoria" name="categoria">  
-                    <option value="" selected hidden> Seleccione </option>
-                    <option value=""></option>
-                </select>
-            </button> -->          
+            <button class="btn btn-dark col-lg-5 mr-sm-1 my-1" type="submit" value="iniciar juego" data-toggle="modal" 
+                (click)='iniciarNivel()' (click)='iniciarJuego()' [disabled]="!formregistro.form.valid"> 
+                <h4 *ngIf="!jugando">Iniciar JUEGO</h4>
+                <h4 *ngIf="jugando">Reiniciar</h4>           
+            </button>         
         </div>
 
         <div class="row" *ngIf="mostrar">
-
+        <!-- VIDAS Y PUNTUACION -->
             <div class="col-md-8 text-center">
-                <div class="form-group alert alert-success text-center">
-                    <label for="para" class="col-4"> Vidas: {{cantidad_vida}} / 6 </label>
+                <div class="form-group alert alert-success text-center" *ngIf="jugando">
+                    <label for="para" class="col-4"> Vidas: {{vidas}} / 6 </label>
                     <label for="para" class="col-2"></label>
-                    <label for="para" class="col-4"> Puntaje: {{cantidad_puntaje}} </label>
+                    <label for="para" class="col-4"> Puntaje: {{puntos}} </label>
                     <label for="para" class="col-2"></label>
                 </div>
+        <!-- PALABRA EN INGLES-->
+                <div class="container my-1" *ngIf="jugando">
+                    <div class="row">
+                        <div class="col-sm-2 mr-sm-2 my-2 text-center" 
+                                *ngFor="let iter of palabraIngles; index as i">
+                            <input type="text" name="name" class="form-control text-center" 
+                                [(ngModel)]="respuesta[i]" maxlength="1" (change)='comprobarPalabra(i)'>
+                        </div>
+                    </div>
 
-                <input type="text" name="letra1" id="letra1" class="col-2 mr-sm-3">
-                <input type="text" name="letra1" id="letra1" class="col-2 mr-sm-3">
-                <input type="text" name="letra1" id="letra1" class="col-2 mr-sm-3">
-                <input type="text" name="letra1" id="letra1" class="col-2 mr-sm-3">
-                
-                <div class="form-group">
-                <button (click)="comprobar(letra)" *ngFor="let letra of letras" 
-                    class="btn btn-dark text-center mr-sm-2 my-2"> {{ letra.toUpperCase()}} 
-                </button>
-                </div>
+                    <div class="form-group my-2">
+                        <button *ngFor="let letra of letras" 
+                            class="btn btn-dark text-center mr-sm-2 my-2"> {{letra.toUpperCase()}} 
+                        </button>
+                    </div>
+                </div>                
             </div>
 
-            <div class="col-md-4" *ngIf="!gano && !perdio">
-                <div class="form-group" *ngFor="let pala of listaPalabras">
-                    <img src="assets/img/{{pala.urlImagen}}"
-                    class="card-img-top imagenzoo" alt="img" >
-                    <label for="para"  class="col alert alert-success text-center"> <h3> Pista: {{pala.palabraEspanol | uppercase}} </h3> </label>
+        <!-- IMAGEN -->
+            <div class="col-md-4" >
+                <div class="form-group" *ngIf="jugando">
+                    <img [src]="palabra.urlImagen"
+                    class="card-img-top imagenzoo" alt="img">
+                    <label for="para"  *ngIf="jugando" class="col alert alert-success text-center"> 
+                        <h3> Pista: {{palabra.palabraEspanol | uppercase}} </h3> 
+                    </label>
                 </div>
             </div>
-
-            <div class="row" *ngIf="gano">
+      
+        <div class="row" *ngIf="gano">
                 <div class="col text-center">
                   <h1 class="text-success">Felicidades! Ganaste!!! :D</h1>
                 </div>
@@ -56,7 +58,7 @@
             <div class="row" *ngIf="perdio">
                 <div class="col text-center">
                   <h1 class="text-danger">Lo siento :( Perdiste!</h1>
-                  <h4 class="text-success" *ngFor="let pala of listaPalabras">La palabra correcta era: {{pala.palabraIngles | uppercase}}</h4>
+                  <h4 class="text-success" >La palabra correcta</h4>
                 </div>
             </div>
             

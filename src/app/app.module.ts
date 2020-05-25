@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { NgxDataTableModule} from "angular-9-datatable";
 import { AlifeFileToBase64Module } from 'alife-file-to-base64';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,7 +32,14 @@ import { FooterComponent } from './components/layout/footer.component';
     FormsModule,
     AppRoutingModule,
     NgxDataTableModule,
-    AlifeFileToBase64Module
+    AlifeFileToBase64Module,
+    ToastrModule.forRoot({
+      closeButton:true,
+      timeOut:2000,
+      maxOpened:1,
+      autoDismiss:true,
+      progressBar:true
+    })
   ],
   providers: [],
   bootstrap: [ AppComponent ]

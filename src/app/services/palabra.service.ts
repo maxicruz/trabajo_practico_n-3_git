@@ -7,7 +7,6 @@ import { Palabra } from '../models/palabra'
 export class PalabraService {
 
   listaPalabras: Array<any>;
-
   constructor() { 
     this.listaPalabras = new Array<Palabra>();
     this.listaPalabras = [
@@ -71,12 +70,35 @@ export class PalabraService {
       palabraEspanol:"chancho",
       urlImagen:"assets/img/chancho.jpg",
     },
+
   ]
 
   }
 
-  getPalabras() {
-    return this.listaPalabras; 
+  public obtenerPalabraIngles(unaPalabra: string): Array<string>{
+    let arrayPalabra = new Array<string>();
+    for(let i=0; i < unaPalabra.length; i++){
+       arrayPalabra[i] = unaPalabra[i];
+    }
+    return arrayPalabra;
+  }
+
+  public obtenerPalabra(): Palabra{
+    let indice = this.genererIndiceAleatorio(1, 10);
+    let palabra: Palabra = this.listaPalabras[indice];
+    return palabra;
+  }
+
+  /**
+   * Retorna un número aleatorio entre min (incluido) y max (excluido)
+   * @param min Desde (incluido)
+   * @param max Hasta (excluido)
+   */
+  
+  public genererIndiceAleatorio(min: number, max: number): number{
+    let numero = Math.random() * (max - min) + min;
+    numero = Math.trunc(numero - 1);
+    return numero;
   }
 
 }

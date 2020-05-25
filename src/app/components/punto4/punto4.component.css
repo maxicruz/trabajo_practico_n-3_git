@@ -24,6 +24,13 @@ h3{
     font-weight: bold;
 }
 
+h4{
+    text-align: center;
+    padding: 10px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
 form{
     width: 100%;
     background: #f0f0f0;
@@ -45,6 +52,7 @@ label{
 .imagenzoo{
     border: solid #000000 5px;
     width: 100%;
+    border-radius: 10px;
 }
 
 button{
@@ -62,8 +70,8 @@ input{
     padding-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
+    border: solid #000000 3px;
     text-align: center;
-    border: solid #000000 2px;
     border-radius: 10px;
     margin-block-end: 2%;
 }
